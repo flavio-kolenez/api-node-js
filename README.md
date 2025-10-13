@@ -1,2 +1,2 @@
-# 2404-api-node-express
+# API Node.JS & Express 
 Projeto utilizado no curso da Alura
