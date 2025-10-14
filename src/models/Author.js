@@ -8,7 +8,10 @@ const authorSchema = new mongoose.Schema(
       // Essa mensagem é mostrada em caso de erro de não vir um campo obrigatorio.
       required: [true, "O nome do(a) autor(a) é obrigatorio."]
     },
-    nationality: {type: String}
+    nationality: {
+      type: String
+      
+    }
   },
   {
     versionKey: false

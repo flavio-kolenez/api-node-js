@@ -1,23 +1,23 @@
 # 📚 Books & Authors API
 
-Uma API RESTful moderna para gerenciamento de livros e autores, construída com Node.js, Express e MongoDB.
+Uma API RESTful moderna para gerenciamento de uma livraria fictica, construída com Node.js, Express e MongoDB.
 
 ## 🚀 Tecnologias
 
-- **Node.js** - Runtime JavaScript
-- **Express** - Framework web
-- **MongoDB** - Banco de dados NoSQL
-- **Mongoose** - ODM para MongoDB
+- **Node.js** - Runtime JavaScript.
+- **Express** - Framework web.
+- **MongoDB** - Banco de dados NoSQL.
+- **Mongoose** - ODM para MongoDB.
 
 ## 📋 Funcionalidades
 
-- ✅ **CRUD completo** para autores e livros
-- ✅ **Relacionamento** entre livros e autores (populate)
-- ✅ **Validações customizadas** com mensagens em português
-- ✅ **Tratamento de erros** com classes especializadas
-- ✅ **Middleware de erro** centralizado
-- ✅ **Busca por editora** com query parameters
-- ✅ **Códigos HTTP apropriados** (200, 201, 400, 404, 500)
+-  **CRUD completo** para autores e livros.
+-  **Relacionamento** entre livros e autores (populate).
+-  **Validações customizadas** com mensagens em português.
+-  **Tratamento de erros** com classes especializadas.
+-  **Middleware de erro** centralizado.
+-  **Busca por editora** com query parameters.
+-  **Códigos HTTP apropriados** (200, 201, 400, 404, 500).
 
 ## 🔧 Instalação
 
@@ -45,7 +45,7 @@ A API estará disponível em: `http://localhost:3000`
 
 ## 📖 Documentação da API
 
-### **Authors Endpoints**
+### **Endpoints para autores**
 
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
@@ -55,7 +55,7 @@ A API estará disponível em: `http://localhost:3000`
 | PUT | `/authors/:id` | Atualiza autor |
 | DELETE | `/authors/:id` | Remove autor |
 
-### **Books Endpoints**
+### **Endpoints para livros**
 
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
@@ -65,37 +65,6 @@ A API estará disponível em: `http://localhost:3000`
 | POST | `/books` | Cria novo livro |
 | PUT | `/books/:id` | Atualiza livro |
 | DELETE | `/books/:id` | Remove livro |
-
-## 🧪 Exemplos de Uso
-
-### **Criar um autor:**
-```bash
-POST /authors
-Content-Type: application/json
-
-{
-  "name": "J.K. Rowling",
-  "nationality": "British"
-}
-```
-
-### **Criar um livro:**
-```bash
-POST /books
-Content-Type: application/json
-
-{
-  "title": "Harry Potter and the Sorcerer's Stone",
-  "author": "AUTHOR_ID_HERE",
-  "publisher": "Bloomsbury",
-  "pagesNumber": 223
-}
-```
-
-### **Buscar livros por editora:**
-```bash
-GET /books/find?publisher=Bloomsbury
-```
 
 ## 📁 Estrutura do Projeto
 
@@ -124,26 +93,6 @@ src/
 └── app.js                    # Configuração do Express
 ```
 
-## 🔍 Schemas
-
-### **Author Schema**
-```javascript
-{
-  name: { type: String, required: true },
-  nationality: { type: String }
-}
-```
-
-### **Book Schema**
-```javascript
-{
-  title: { type: String, required: true },
-  author: { type: ObjectId, ref: 'autores', required: true },
-  publisher: { type: String, required: true },
-  pagesNumber: { type: Number }
-}
-```
-
 ## ⚠️ Tratamento de Erros
 
 A API retorna erros padronizados:
@@ -160,29 +109,11 @@ Exemplo de resposta de erro:
 }
 ```
 
-## 🛠️ Scripts Disponíveis
-
-```bash
-npm run dev    # Executa com nodemon (desenvolvimento)
-npm start      # Executa em produção
-```
-
-## 🚀 Deploy
-
-Para fazer deploy em produção:
-
-1. Configure as variáveis de ambiente
-2. Ajuste a string de conexão do MongoDB
-3. Execute `npm start`
-
 ## 👨‍💻 Autor
 
 **Flavio Kolenez**
 - GitHub: [@flavio-kolenez](https://github.com/flavio-kolenez)
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ---
 

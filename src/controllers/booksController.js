@@ -1,4 +1,4 @@
-import books from "../models/Book.js";
+import { books } from "../models/index.js";
 import NotFound from "../errors/NotFound.js";
 
 class booksController {
@@ -21,7 +21,7 @@ class booksController {
 			
 			if (bookResult !== null) {
 				res.status(200).send(bookResult);
-			} else {
+			} else {	
 				new NotFound("Id do livro não localizado.")
 			}
 		} catch (error) {
@@ -69,10 +69,20 @@ class booksController {
 		}
 	}
 
-	static listBooksByPublisher = async (req, res, next) => {
+	// Precisa testar isso no postman
+	static listBooksByFilter = async (req, res, next) => {
 		try {
-			const publisher = req.query.publisher;
-			const booksResult = await books.find({ "publisher": publisher });
+			const { publisher, title } = req.query;
+			const filter = {}
+
+			publisher ? (filter.publisher = publisher) : null;
+			title ? (filter.title = { 
+						$regex: title,
+						$options: "i" 
+					}) 
+			: null;
+
+			const booksResult = await books.find(filter);
 			res.status(200).send(booksResult);
 		} catch (error) {
 			next(error);
