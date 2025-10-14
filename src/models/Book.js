@@ -1,27 +1,34 @@
 import mongoose from "mongoose";
 
-const livroSchema = new mongoose.Schema(
+const bookSchema = new mongoose.Schema(
 	{
 		id: { type: String },
-		titulo: {
+		title: {
 			type: String,
 			required: [true, "O título do livro é obrigatório."]
 		},
 		
-		autor: {
+		author: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'autores',
 			required: [true, "O nome do autor é obrigatório"]
 		},
 
-		editora: {
+		publisher: {
 			type: String,
 			required: [true, "O nome da editora é obrigatório."]
 		},
-		numeroPaginas: { type: Number }
+		pagesNumber: {
+			type: Number,
+			min: 10,
+			max: 5000,
+		}
+	},
+	{
+		versionKey: false
 	}
 );
 
-const livros = mongoose.model('livros', livroSchema);
+const books = mongoose.model('livros', bookSchema);
 
-export default livros;
+export default books;

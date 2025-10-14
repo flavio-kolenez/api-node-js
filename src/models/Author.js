@@ -1,20 +1,20 @@
 import mongoose from "mongoose";
 
-const autorSchema = new mongoose.Schema(
+const authorSchema = new mongoose.Schema(
   {
     id: {type: String},
-    nome: {
+    name: {
       type: String, 
       // Essa mensagem é mostrada em caso de erro de não vir um campo obrigatorio.
       required: [true, "O nome do(a) autor(a) é obrigatorio."]
     },
-    nacionalidade: {type: String}
+    nationality: {type: String}
   },
   {
     versionKey: false
   }
 )
 
-const autores = mongoose.model("autores", autorSchema)
+const authors = mongoose.model("autores", authorSchema)
 
-export default autores;
+export default authors;
