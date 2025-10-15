@@ -9,15 +9,71 @@ Uma API RESTful moderna para gerenciamento de uma livraria fictica, construída 
 - **MongoDB** - Banco de dados NoSQL.
 - **Mongoose** - ODM para MongoDB.
 
-## 📋 Funcionalidades
+## ⚙️ Arquitetura dos Middlewares
 
--  **CRUD completo** para autores e livros.
--  **Relacionamento** entre livros e autores (populate).
--  **Validações customizadas** com mensagens em português.
--  **Tratamento de erros** com classes especializadas.
--  **Middleware de erro** centralizado.
--  **Busca por editora** com query parameters.
--  **Códigos HTTP apropriados** (200, 201, 400, 404, 500).
+```mermaid
+graph TD
+    A[📨 REQUEST] --> B[🔧 express.json]
+    B --> C[🛣️ routes/index.js]
+    
+    C --> D{🔍 Route Match?}
+    
+    D -->|✅ /books| E[📚 Books Routes]
+    D -->|✅ /authors| F[👤 Authors Routes]
+    D -->|❌ No Match| G[🚫 manipulator404.js]
+    
+    E --> H{📖 Books Endpoint?}
+    F --> I{👨‍💼 Authors Endpoint?}
+    
+    H -->|GET /books| J[📄 listBooks Controller]
+    H -->|GET /books/filter| K[🔍 listBooksByFilter]
+    H -->|Other CRUD| L[📖 Other Books Controllers]
+    
+    I -->|GET /authors| M[📄 listAuthors Controller]
+    I -->|Other CRUD| N[👨‍💼 Other Authors Controllers]
+    
+    J --> O[📋 Pagination Middleware]
+    M --> O
+    
+    K --> P{🎯 Success?}
+    L --> P
+    N --> P
+    O --> P
+    
+    G --> Q[🔄 errorManipulator]
+    
+    P -->|✅ Success| R[📤 RESPONSE]
+    P -->|❌ Error| Q
+    
+    Q --> S{🔍 Error Type?}
+    
+    S -->|CastError| T[🚫 BadRequest - 400]
+    S -->|ValidationError| U[⚠️ ValidationError - 400]
+    S -->|BaseError| V[🎯 Custom Error]
+    S -->|Other| W[💥 BaseError - 500]
+    
+    T --> R
+    U --> R
+    V --> R
+    W --> R
+    
+    style A fill:#e1f5fe
+    style R fill:#e8f5e8
+    style Q fill:#fff3e0
+    style G fill:#ffebee
+    style O fill:#f3e5f5
+```
+
+## 🎲 Funcionalidades
+
+- ✅ **CRUD completo** para autores e livros
+- ✅ **Relacionamento** entre livros e autores (populate)
+- ✅ **Validações customizadas** com mensagens em português
+- ✅ **Tratamento de erros** com classes especializadas
+- ✅ **Middleware de erro** centralizado
+- 🆕 **Filtros avançados** para busca de livros
+- 🆕 **Query parameters** flexíveis (editora, autor, páginas, título)
+- ✅ **Códigos HTTP apropriados** (200, 400, 404, 500)
 
 ## 🔧 Instalação
 
@@ -33,8 +89,8 @@ npm install
 ```
 
 3. **Configure o MongoDB:**
-   - Certifique-se de ter o MongoDB rodando localmente
-   - Ou configure uma string de conexão no arquivo `src/config/dbConnect.js`
+   - Este projeto utiliza **MongoDB Atlas** (cloud database)
+   - Configure sua string de conexão no arquivo `src/config/dbConnect.js`
 
 4. **Execute o projeto:**
 ```bash
@@ -42,6 +98,40 @@ npm run dev
 ```
 
 A API estará disponível em: `http://localhost:3000`
+
+## ⚙️ Configuração do MongoDB Atlas
+
+1. **Crie uma conta no MongoDB Atlas:** https://www.mongodb.com/atlas
+2. **Crie um cluster gratuito**
+3. **Configure o acesso:**
+   - Adicione seu IP na whitelist
+   - Crie um usuário de banco de dados
+4. **Obtenha a string de conexão:**
+   ```
+   mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/<dbname>
+   ```
+5. **Configure no arquivo `src/config/dbConnect.js`**
+
+6. **⚠️ Segurança - Configure variáveis de ambiente:**
+   ```bash
+   # Crie um arquivo .env na raiz do projeto
+   MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/<dbname>
+   PORT=3000
+   ```
+   
+   **Importante:** Adicione `.env` no `.gitignore` para não subir credenciais!
+
+7. **Para usar as variáveis de ambiente, instale dotenv:**
+   ```bash
+   npm install dotenv
+   ```
+   
+   **No arquivo `src/config/dbConnect.js`:**
+   ```javascript
+   import 'dotenv/config';
+   
+   const connectionString = process.env.MONGODB_URI;
+   ```
 
 ## 📖 Documentação da API
 
@@ -101,13 +191,6 @@ A API retorna erros padronizados:
 - **404** - Recurso não encontrado
 - **500** - Erro interno do servidor
 
-Exemplo de resposta de erro:
-```json
-{
-  "message": "Os seguintes erros foram encontrados: O nome do autor é obrigatório.",
-  "status": 400
-}
-```
 
 ## 👨‍💻 Autor
 
