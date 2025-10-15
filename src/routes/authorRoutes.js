@@ -1,10 +1,11 @@
 import express from "express";
 import AuthorController from "../controllers/authorsController.js";
+import paginate from "../middlewares/page.js";
 
 const router = express.Router();
 
 router
-  .get("/authors", AuthorController.listAuthors)
+  .get("/authors", AuthorController.listAuthors, paginate)
   .get("/authors/:id", AuthorController.listAuthorById)
   .post("/authors", AuthorController.registerAuthor)
   .put("/authors/:id", AuthorController.updateAuthor)

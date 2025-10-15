@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import BaseError from "../errors/BaseErrors.js";
 import BadRequest from "../errors/BadRequestError.js";
 import ValidationError from "../errors/validationError.js";
-import NotFound from "../errors/NotFound.js";
 
 // MiddleWare de erro
 function errorManipulator(erro, req, res, next) { 
@@ -10,23 +9,23 @@ function errorManipulator(erro, req, res, next) {
 
     if (erro instanceof mongoose.Error.CastError) {
         // Formatação de string errada
-        new BadRequest().sendResponse(res);
+        return new BadRequest().sendResponse(res);
     } 
     
     else if (erro instanceof mongoose.Error.ValidationError) {
         // Retorna um array com os erros vindo de erro
         // E reescreve para a mensagem que esta dentro de erro
-        new ValidationError(erro).sendResponse(res);
+        return new ValidationError(erro).sendResponse(res);
     } 
     
-    else if(erro instanceof NotFound) {
-        erro.sendResponse(res);
+    else if(erro instanceof BaseError) {
+        return erro.sendResponse(res);
     } 
     
     else {
         // Deu algum outro B.O
         // Função que criamos para retornar um erro base
-        new BaseError().sendResponse(res);
+        return new BaseError().sendResponse(res);
     }
 }
 
