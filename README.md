@@ -71,9 +71,10 @@ graph TD
 - ✅ **Validações customizadas** com mensagens em português
 - ✅ **Tratamento de erros** com classes especializadas
 - ✅ **Middleware de erro** centralizado
-- 🆕 **Filtros avançados** para busca de livros
-- 🆕 **Query parameters** flexíveis (editora, autor, páginas, título)
+- ✅ **Filtros avançados** para busca de livros
+- ✅ **Query parameters** flexíveis (editora, autor, páginas, título)
 - ✅ **Códigos HTTP apropriados** (200, 400, 404, 500)
+- 🆕 **Utilização do Swagger** para documentação apropriada
 
 ## 🔧 Instalação
 
@@ -98,6 +99,22 @@ npm run dev
 ```
 
 A API estará disponível em: `http://localhost:3000`
+
+## 🖥️ Usando o Swagger UI localmente
+
+Após clonar e instalar as dependências, você pode acessar a documentação interativa da API via Swagger UI:
+
+1. Primeiro certifique-se de que o projeto está rodando:
+   ```bash
+   npm run dev
+   ```
+
+2. Abra o navegador e acesse:
+   ```
+   http://localhost:3000/api-docs
+   ```
+
+Você verá a interface Swagger UI, onde pode explorar todos os endpoints, parâmetros, modelos e testar requisições diretamente pelo navegador.
 
 ## ⚙️ Configuração do MongoDB Atlas
 
@@ -133,7 +150,7 @@ A API estará disponível em: `http://localhost:3000`
    const connectionString = process.env.MONGODB_URI;
    ```
 
-## 📖 Documentação da API
+## 📖 Documentação de rotas da API
 
 ### **Endpoints para autores**
 
@@ -196,7 +213,6 @@ A API retorna erros padronizados:
 
 **Flavio Kolenez**
 - GitHub: [@flavio-kolenez](https://github.com/flavio-kolenez)
-
 
 ---
 
